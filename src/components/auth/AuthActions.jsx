@@ -14,9 +14,11 @@ const AuthActions = () => {
 
   return (
     <div className="auth-actions">
-      <button onClick={logOut}>Log out</button>
+      <button onClick={logOut}>Sign out</button>
     </div>
   );
 };
+
+
 
 export default AuthActions;

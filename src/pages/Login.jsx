@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import styled from "styled-components";
 
 function Login() {
   const [cookies] = useCookies([]);
@@ -53,51 +54,64 @@ function Login() {
   };
 
   return (
-    <GoogleOAuthProvider clientId="431445019366-34ivq50hqso9fjlekjsvir29rv1elbjv.apps.googleusercontent.com">
-      ...
-      <div className="container">
-        <h2>Login to your Account</h2>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={(e) =>
-                setValues({ ...values, [e.target.name]: e.target.value })
-              }
+    <Wrapper>
+      <GoogleOAuthProvider clientId="431445019366-34ivq50hqso9fjlekjsvir29rv1elbjv.apps.googleusercontent.com">
+        ...
+        <div className="container">
+          <h2>Login to your Account</h2>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={(e) =>
+                  setValues({ ...values, [e.target.name]: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={(e) =>
+                  setValues({ ...values, [e.target.name]: e.target.value })
+                }
+              />
+            </div>
+            <button type="submit">Submit</button>
+            <span>
+              Don't have an account ?<Link to="/register"> Register </Link>
+            </span>
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                const details = jwt_decode(credentialResponse.credential);
+                console.log(details);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
             />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={(e) =>
-                setValues({ ...values, [e.target.name]: e.target.value })
-              }
-            />
-          </div>
-          <button type="submit">Submit</button>
-          <span>
-            Don't have an account ?<Link to="/register"> Register </Link>
-          </span>
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              const details = jwt_decode(credentialResponse.credential);
-              console.log(details);
-            }}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          />
-        </form>
-        <ToastContainer />
-      </div>
-    </GoogleOAuthProvider>
+          </form>
+          <ToastContainer />
+        </div>
+      </GoogleOAuthProvider>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(236, 236, 238);
+  overflow: hidden;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+`;
 
 export default Login;
