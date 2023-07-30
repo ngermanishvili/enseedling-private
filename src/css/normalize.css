@@ -1,0 +1,169 @@
+/* modern-normalize.css */
+
+/* Reset browser default styles */
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-text-stroke-width: 0;
+  }
+  
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #212529;
+  }
+  
+  /* Normalize text elements */
+  
+  h1 {
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+  }
+  
+  h3 {
+    font-size: 1.17em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+  }
+  
+  p {
+    margin: 0 0 1em 0;
+  }
+  
+  a {
+    color: #4285f4;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Normalize lists */
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 0.67em;
+  }
+  
+  /* Normalize tables */
+  
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 0.75em;
+  }
+  
+  /* Normalize images */
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Normalize input elements */
+  
+  input,
+  button,
+  select,
+  textarea {
+    font-family: sans-serif;
+    font-size: 16px;
+  }
+  
+  input[type="reset"],
+  input[type="submit"] {
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  input[type="reset"]:hover,
+  input[type="submit"]:hover {
+    background-color: #337ab7;
+  }
+  
+  /* Normalize other elements */
+  
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+  }
+  
+  abbr {
+    border-bottom: 1px dotted #ccc;
+    cursor: help;
+  }
+  
+  b,
+  strong {
+    font-weight: bold;
+  }
+  
+  code,
+  kbd,
+  samp {
+    font-family: monospace, monospace;
+  }
+  
+  dfn {
+    font-style: italic;
+  }
+  
+  mark {
+    background-color: #ff0;
+    color: #000;
+  }
+  
+  pre {
+    white-space: pre-wrap;
+  }
+  
+  small {
+    font-size: 80%;
+  }
+  
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+  }
+  
+  sub {
+    bottom: -0.25em;
+  }
+  
+  sup {
+    top: -0.5em;
+  }
+  
+  /* Normalize SVG */
+  
+  svg {
+    max-width: 100%;
+  }
+  
