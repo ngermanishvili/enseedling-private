@@ -6,20 +6,7 @@ import Cards from "./pages/Cards";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
-  // const [user, setUser] = useState({});
 
-  // let handleCallbackResponse = (response) => {
-  //   console.log(response);
-  // }
-
-  // useEffect(() => {
-  //   google.accounts.id.initialize({
-  //     client_id: "431445019366-34ivq50hqso9fjlekjsvir29rv1elbjv.apps.googleusercontent.com",
-  //     callback: handleCallbackResponse
-  //   })
-
-  //   google.accounts.id.renderbutton(document)
-  // }, [])
 
   return (
     <>
