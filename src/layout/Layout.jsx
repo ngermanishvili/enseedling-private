@@ -7,7 +7,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 
-import Courses from '../components/Home/Courses'
+import Courses from '../components/Dashboard/StudentDashboard/Courses'
 import { Layout, Menu, Button, theme } from "antd";
 import styled from "styled-components";
 import AuthActions from "../components/auth/AuthActions";

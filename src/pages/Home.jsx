@@ -1,15 +1,13 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
-import AuthChecker from "../components/auth/authChecker";
-import LayoutDashboard from "../layout/Layout";
+import Navbar from "../components/Navbar/Navbar";
 
-export default function Cards() {
+const HomePage = () => {
   return (
     <>
-      <LayoutDashboard>
-        <AuthChecker />
-        <ToastContainer />
-      </LayoutDashboard>
+      <Navbar />
+      <div>IntershipHome</div>
     </>
   );
-}
+};
+
+export default HomePage;

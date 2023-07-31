@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row } from "antd";
 import styled from "styled-components";
-import randomImg from "../../assets/photo-1510915228340-29c85a43dcfe.avif";
+import randomImg from "../../../assets/Images/example3.avif";
 
 const CourseCard = styled.div`
   border: 1px solid #ccc;

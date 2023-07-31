@@ -1,24 +1,23 @@
-import Register from "./pages/Register";
+import Register from "./components/auth/Register";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import LayoutDashboard from "./layout/Layout"
+import Login from "./components/auth/Login";
+import InternDashboard from "./components/Dashboard/IntershipDashboard/InternDashboard";
 import "react-toastify/dist/ReactToastify.css";
+import HomePage from "./pages/Home";
 
 export default function App() {
 
   return (
     <>
-
       <BrowserRouter>
         <Routes>
+          <Route exact path="/" element={<HomePage />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/update" element={<Home />} />
+          <Route exact path="/InternDashboard" element={<InternDashboard />} />
+          <Route exact path="/update" element={<InternDashboard />} />
         </Routes>
       </BrowserRouter>
-
     </>
   );
 }
