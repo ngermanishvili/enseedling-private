@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,15 +14,35 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useCookies } from "react-cookie";
+import axios from "axios";
 
 const pages = ["Intership", "About us", "Contact"];
-const settings = ["Dashboard"];
+const settings = ["InternDashboard"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [cookies, , removeCookie] = useCookies(["jwt"]);
+  const [userData, setUserData] = useState(null);
   const location = useLocation();
+
+  useEffect(() => {
+    // Fetch user data when the component mounts
+    const fetchUserData = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:4000/get-user-data",
+          {
+            withCredentials: true,
+          }
+        );
+        setUserData(data.user); // Update the user data state with the retrieved data
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -167,11 +187,18 @@ function ResponsiveAppBar() {
 
           {isLoggedIn ? (
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip
+                title={`Open settings - ${userData?.firstName} ${userData?.lastName}`}
+              >
+                {/* Display the user's first name and last name in the tooltip */}
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    alt={`${userData?.firstName} ${userData?.lastName}`}
+                    src="/static/images/avatar/2.jpg"
+                  />
                 </IconButton>
               </Tooltip>
+
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"

@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+ 
 function Register() {
   const [cookies] = useCookies(["cookie-name"]);
   const navigate = useNavigate();
@@ -14,7 +14,12 @@ function Register() {
     }
   }, [cookies, navigate]);
 
-  const [values, setValues] = useState({ firstName: "", email: "", password: "" });
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
   const generateError = (error) =>
     toast.error(error, {
       position: "bottom-right",
@@ -59,6 +64,18 @@ function Register() {
               }
             />
           </div>
+          <div>
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              onChange={(e) =>
+                setValues({ ...values, [e.target.name]: e.target.value })
+              }
+            />
+          </div>
+
           <div>
             <label htmlFor="email">Email</label>
             <input

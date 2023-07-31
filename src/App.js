@@ -1,7 +1,7 @@
 import Register from "./components/auth/Register";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./components/auth/Login";
-import InternDashboard from "./components/Dashboard/IntershipDashboard/InternDashboard";
+import InternDashboard from "./pages/InternDashboard";
 import "react-toastify/dist/ReactToastify.css";
 import HomePage from "./pages/Home";
 

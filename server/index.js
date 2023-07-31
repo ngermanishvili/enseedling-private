@@ -9,7 +9,7 @@ app.listen(4000, () => {
     console.log("Server Started on port 4000");
 });
 
-const mongoDBURI = "mongodb+srv://nikagermanishvili5:germana@newcluster.bpvzbg5.mongodb.net/";
+const mongoDBURI = "mongodb+srv://nikagermanishvili5:germana@newcluster.bpvzbg5.mongodb.net/jwt";
 
 mongoose.connect(mongoDBURI, {
     useNewUrlParser: true,

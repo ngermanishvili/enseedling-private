@@ -47,8 +47,8 @@ const handleErrors = (err) => {
 
 module.exports.register = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
-        const user = await User.create({ email, password });
+        const { firstName, lastName, email, password } = req.body; // Extract lastName from the request body
+        const user = await User.create({ firstName, lastName, email, password }); // Save lastName along with firstName, email, and password
         const token = createToken(user._id);
 
         res.cookie("jwt", token, {
@@ -65,6 +65,8 @@ module.exports.register = async (req, res, next) => {
     }
 };
 
+
+
 module.exports.login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -75,5 +77,39 @@ module.exports.login = async (req, res) => {
     } catch (err) {
         const errors = handleErrors(err);
         res.json({ errors, status: false });
+    }
+};
+
+module.exports.getUserData = async (req, res, next) => {
+    try {
+        // Get the user data from the JWT token
+        const token = req.cookies.jwt;
+        if (token) {
+            jwt.verify(token, "ngermanishvili", async (err, decodedToken) => {
+                if (err) {
+                    res.json({ status: false });
+                } else {
+                    try {
+                        const user = await User.findById(decodedToken.id);
+                        if (user) {
+                            const { email, firstName, lastName } = user;
+                            res.json({ status: true, user: { email, firstName, lastName } });
+                        } else {
+                            res.json({ status: false });
+                        }
+                    } catch (error) {
+                        console.log(error);
+                        res.json({ status: false });
+                    }
+                }
+                next();
+            });
+        } else {
+            res.json({ status: false });
+            next();
+        }
+    } catch (err) {
+        console.log(err);
+        res.json({ status: false });
     }
 };
