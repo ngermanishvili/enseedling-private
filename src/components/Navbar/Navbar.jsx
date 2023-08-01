@@ -26,23 +26,23 @@ function ResponsiveAppBar() {
   const [userData, setUserData] = useState(null);
   const location = useLocation();
 
-  useEffect(() => {
-    // Fetch user data when the component mounts
-    const fetchUserData = async () => {
-      try {
-        const { data } = await axios.get(
-          "http://localhost:4000/get-user-data",
-          {
-            withCredentials: true,
-          }
-        );
-        setUserData(data.user); // Update the user data state with the retrieved data
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUserData();
-  }, []);
+  // useEffect(() => {
+  //   // Fetch user data when the component mounts
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const { data } = await axios.get(
+  //         "http://localhost:4000/get-user-data",
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       setUserData(data.user); // Update the user data state with the retrieved data
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

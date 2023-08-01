@@ -1,15 +1,17 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
 const mongoose = require("mongoose");
-const authRoutes = require("./Routes/AuthRoutes");
-const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const {s3Uploadv2, s3Uploadv3} = require("./s3Service");
 const uuid = require("uuid").v4;
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const connectDB = require("./DB/index");
+
+const registerUser = require("./Controllers/RegisterController");
+const loginUser = require("./Controllers/LoginController");
 
 const app = express();
-app.use(cors());
 
 const storage = multer.memoryStorage();
 const fileFilter = (req, file, cb) => {
@@ -25,24 +27,7 @@ const upload = multer({
   fileFilter,
   limits: {fileSize: 1000000000, files: 2},
 });
-app.listen(4000, () => {
-  console.log("Server Started on port 4000");
-});
 
-const mongoDBURI =
-  "mongodb+srv://samxara:samxara@cluster0.j0xk7o2.mongodb.net/jwt";
-
-mongoose
-  .connect(mongoDBURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("mongo successfully connected");
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
 app.post("/upload", upload.array("file"), async (req, res) => {
   try {
     const results = await s3Uploadv2(req.files);
@@ -51,6 +36,10 @@ app.post("/upload", upload.array("file"), async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+connectDB(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
 app.use(
@@ -63,4 +52,9 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
-app.use("/", authRoutes);
+app.use("/register", registerUser);
+app.use("/login", loginUser);
+
+app.listen(process.env.PORT || 4000, () => {
+  console.log("Server Started on port 4000");
+});

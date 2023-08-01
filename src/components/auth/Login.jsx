@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { useCookies } from 'react-cookie';
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React, {useState, useEffect} from "react";
+import axios from "axios";
+import {ToastContainer, toast} from "react-toastify";
+import {useCookies} from "react-cookie";
+import {Link, useNavigate} from "react-router-dom";
+import styled from "styled-components";
 
 function Login() {
-  const [cookies, setCookies] = useCookies(['jwt']);
+  const [cookies, setCookies] = useCookies(["jwt"]);
   const navigate = useNavigate();
   useEffect(() => {
     if (cookies.jwt) {
-      navigate('/');
+      navigate("/");
     }
   }, [cookies, navigate]);
 
-  const [values, setValues] = useState({ email: '', password: '' });
+  const [values, setValues] = useState({email: "", password: ""});
   const [loading, setLoading] = useState(false);
 
   const generateError = (error) =>
     toast.error(error, {
-      position: 'bottom-right',
+      position: "bottom-right",
     });
 
   const handleSubmit = async (event) => {
@@ -27,33 +27,68 @@ function Login() {
 
     // validate that inputs are not empty
     if (!values.email || !values.password) {
-      if (!values.email) generateError('Email is required');
-      if (!values.password) generateError('Password is required');
+      if (!values.email) generateError("Email is required");
+      if (!values.password) generateError("Password is required");
+      return; // exit the function early if inputs are empty
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        "http://localhost:4000/login",
+        {...values, role: "intern"},
+        {withCredentials: true}
+      );
+      setLoading(false);
+      console.log(response);
+      if (response.data.status === false) {
+        const {email, password} = response.data.errors;
+        if (email) generateError(email);
+        if (password) generateError(password);
+      } else {
+        // Successful login, set the 'jwt' cookie
+        setCookies("jwt", response.data.token, {path: "/"});
+        navigate("/");
+      }
+    } catch (ex) {
+      setLoading(false);
+      console.log(ex);
+      generateError("An unexpected error occurred.");
+    }
+  };
+  const handleSubmit2 = async (event) => {
+    event.preventDefault();
+
+    // validate that inputs are not empty
+    if (!values.email || !values.password) {
+      if (!values.email) generateError("Email is required");
+      if (!values.password) generateError("Password is required");
       return; // exit the function early if inputs are empty
     }
 
     try {
       setLoading(true);
       const response = await axios.post(
-        'http://localhost:4000/login',
-        { ...values },
-        { withCredentials: true }
+        "http://localhost:4000/login",
+        {...values, role: "teacher"},
+        {withCredentials: true}
       );
       setLoading(false);
-
+      console.log(response);
       if (response.data.status === false) {
-        const { email, password } = response.data.errors;
+        const {email, password} = response.data.errors;
         if (email) generateError(email);
         if (password) generateError(password);
       } else {
         // Successful login, set the 'jwt' cookie
-        setCookies('jwt', response.data.token, { path: '/' });
-        navigate('/');
+        setCookies("jwt", response.data.token, {path: "/"});
+        navigate("/");
       }
     } catch (ex) {
       setLoading(false);
       console.log(ex);
-      generateError('An unexpected error occurred.');
+      generateError("An unexpected error occurred.");
     }
   };
 
@@ -69,7 +104,7 @@ function Login() {
               name="email"
               placeholder="Email"
               value={values.email}
-              onChange={(e) => setValues({ ...values, email: e.target.value })}
+              onChange={(e) => setValues({...values, email: e.target.value})}
             />
           </div>
           <div>
@@ -79,11 +114,43 @@ function Login() {
               placeholder="Password"
               name="password"
               value={values.password}
-              onChange={(e) => setValues({ ...values, password: e.target.value })}
+              onChange={(e) => setValues({...values, password: e.target.value})}
             />
           </div>
           <button type="submit" disabled={loading}>
-            {loading ? 'Loading...' : 'Submit'}
+            {loading ? "Loading..." : "Submit"}
+          </button>
+          <span>
+            Don't have an account? <Link to="/register">Register</Link>
+          </span>
+        </form>
+        <ToastContainer />
+      </div>{" "}
+      <div className="container">
+        <h2>Login to your Account</h2>
+        <form onSubmit={handleSubmit2}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={values.email}
+              onChange={(e) => setValues({...values, email: e.target.value})}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={values.password}
+              onChange={(e) => setValues({...values, password: e.target.value})}
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Submit"}
           </button>
           <span>
             Don't have an account? <Link to="/register">Register</Link>
