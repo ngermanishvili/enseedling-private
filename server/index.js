@@ -1,31 +1,30 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
-const authRoutes = require("./Routes/AuthRoutes")
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
 const app = express();
+require("dotenv").config();
+const connectDB = require("./DB/index");
 
-app.listen(4000, () => {
-    console.log("Server Started on port 4000");
+const registerUser = require("./Controllers/RegisterController");
+const loginUser = require("./Controllers/LoginController");
+
+connectDB(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-const mongoDBURI = "mongodb+srv://nikagermanishvili5:germana@newcluster.bpvzbg5.mongodb.net/jwt";
-
-mongoose.connect(mongoDBURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log('mongo successfully connected');
-}).catch(err => {
-    console.log(err.message);
-});
-
-app.use(cors({
+app.use(cookieParser());
+app.use(express.json());
+app.use(
+  cors({
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
     credentials: true,
-}));
+  })
+);
+app.use("/register", registerUser);
+app.use("/login", loginUser);
 
-app.use(cookieParser())
-app.use(express.json());
-app.use("/", authRoutes);
+app.listen(process.env.PORT || 4000, () => {
+  console.log("Server Started on port 4000");
+});

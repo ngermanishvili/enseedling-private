@@ -4,10 +4,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
- 
+
 function Register() {
   const [cookies] = useCookies(["cookie-name"]);
-  
+
   const navigate = useNavigate();
   useEffect(() => {
     if (cookies.jwt) {
@@ -35,6 +35,8 @@ function Register() {
         },
         { withCredentials: true }
       );
+      console.log("🚀 ~ file: Register.jsx:38 ~ handleSubmit ~ data:", data);
+
       if (data) {
         if (data.errors) {
           const { firstName, email, password } = data.errors;
