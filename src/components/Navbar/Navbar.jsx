@@ -27,7 +27,6 @@ function ResponsiveAppBar() {
   const location = useLocation();
 
   useEffect(() => {
-    // Fetch user data when the component mounts
     const fetchUserData = async () => {
       try {
         const { data } = await axios.get(
@@ -36,7 +35,7 @@ function ResponsiveAppBar() {
             withCredentials: true,
           }
         );
-        setUserData(data.user); // Update the user data state with the retrieved data
+        setUserData(data.user);
       } catch (error) {
         console.log(error);
       }

@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 
 const AuthActions = () => {
   const navigate = useNavigate();
+  
   const [, , removeCookie] = useCookies();
 
   const logOut = () => {
@@ -18,7 +19,5 @@ const AuthActions = () => {
     </div>
   );
 };
-
-
 
 export default AuthActions;

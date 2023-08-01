@@ -48,7 +48,7 @@ const handleErrors = (err) => {
 module.exports.register = async (req, res, next) => {
     try {
         const { firstName, lastName, email, password } = req.body; // Extract lastName from the request body
-        const user = await User.create({ firstName, lastName, email, password }); // Save lastName along with firstName, email, and password
+        const user = await User.create({ firstName, lastName, email, password }); // Save lastName along 
         const token = createToken(user._id);
 
         res.cookie("jwt", token, {
@@ -64,9 +64,6 @@ module.exports.register = async (req, res, next) => {
         res.json({ errors, created: false });
     }
 };
-
-
-
 module.exports.login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -79,7 +76,6 @@ module.exports.login = async (req, res) => {
         res.json({ errors, status: false });
     }
 };
-
 module.exports.getUserData = async (req, res, next) => {
     try {
         // Get the user data from the JWT token

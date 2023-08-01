@@ -7,6 +7,7 @@ import styled from "styled-components";
  
 function Register() {
   const [cookies] = useCookies(["cookie-name"]);
+  
   const navigate = useNavigate();
   useEffect(() => {
     if (cookies.jwt) {
