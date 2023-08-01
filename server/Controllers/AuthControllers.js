@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-    return jwt.sign({ id }, "ngermanishvili", {
-        expiresIn: maxAge,
+    return jwt.sign({id}, "samxara", {
+      expiresIn: maxAge,
     });
 };
 
@@ -85,24 +85,27 @@ module.exports.getUserData = async (req, res, next) => {
         // Get the user data from the JWT token
         const token = req.cookies.jwt;
         if (token) {
-            jwt.verify(token, "ngermanishvili", async (err, decodedToken) => {
-                if (err) {
-                    res.json({ status: false });
-                } else {
-                    try {
-                        const user = await User.findById(decodedToken.id);
-                        if (user) {
-                            const { email, firstName, lastName } = user;
-                            res.json({ status: true, user: { email, firstName, lastName } });
-                        } else {
-                            res.json({ status: false });
-                        }
-                    } catch (error) {
-                        console.log(error);
-                        res.json({ status: false });
-                    }
+            jwt.verify(token, "samxara", async (err, decodedToken) => {
+              if (err) {
+                res.json({status: false});
+              } else {
+                try {
+                  const user = await User.findById(decodedToken.id);
+                  if (user) {
+                    const {email, firstName, lastName} = user;
+                    res.json({
+                      status: true,
+                      user: {email, firstName, lastName},
+                    });
+                  } else {
+                    res.json({status: false});
+                  }
+                } catch (error) {
+                  console.log(error);
+                  res.json({status: false});
                 }
-                next();
+              }
+              next();
             });
         } else {
             res.json({ status: false });

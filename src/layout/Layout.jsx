@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -7,23 +7,28 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 
-import Courses from '../components/Dashboard/StudentDashboard/Courses'
-import { Layout, Menu, Button, theme } from "antd";
+import Courses from "../components/Dashboard/StudentDashboard/Courses";
+import {Layout, Menu, Button, theme} from "antd";
 import styled from "styled-components";
 import AuthActions from "../components/auth/AuthActions";
+import {useNavigate} from "react-router-dom";
 
-
-const { Header, Sider, Content } = Layout;
+const {Header, Sider, Content} = Layout;
 const LayoutDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer },
+    token: {colorBgContainer},
   } = theme.useToken();
 
   const handleLogout = () => {
     setCollapsed(false);
   };
 
+  let navigate = useNavigate();
+
+  function redirectToAnotherRoute() {
+    navigate("/UploadCourse");
+  }
   return (
     <LayoutWrapper>
       <Layout className="layout">
@@ -53,12 +58,13 @@ const LayoutDashboard = () => {
                 key: "4",
                 icon: <UploadOutlined />,
                 label: "Upload Courses",
+                onClick: redirectToAnotherRoute,
               },
             ]}
           />
         </Sider>
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Header style={{padding: 0, background: colorBgContainer}}>
             <AuthActions logOut={handleLogout} />
             <Button
               type="text"

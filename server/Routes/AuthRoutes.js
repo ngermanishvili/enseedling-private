@@ -1,4 +1,4 @@
-const { register, login, getUserData } = require("../controllers/authControllers");
+const { register, login, getUserData } = require("../Controllers/AuthControllers");
 const { checkUser } = require("../middlewares/AuthMiddleware");
 const router = require("express").Router();
 
