@@ -19,6 +19,7 @@ function Register() {
     firstName: "",
     lastName: "",
     email: "",
+    status: "",
     password: "",
   });
   const generateError = (error) =>
@@ -28,6 +29,7 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      console.log(values)
       const { data } = await axios.post(
         "http://localhost:4000/register",
         {
@@ -44,9 +46,10 @@ function Register() {
           else if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-          navigate("/");
+          navigate("/login");
         }
       }
+
     } catch (ex) {
       console.log(ex);
     }
@@ -55,7 +58,7 @@ function Register() {
     <Wrapper>
       <div className="container">
         <h2>Register Account</h2>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="firstName">First Name</label>
             <input
@@ -89,6 +92,13 @@ function Register() {
                 setValues({ ...values, [e.target.name]: e.target.value })
               }
             />
+          </div>
+          <div>
+            <select name="status" onChange={(e)=> setValues({ ...values, [e.target.name]: e.target.value })}>
+              <option value="status">choose status</option>
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+            </select>
           </div>
           <div>
             <label htmlFor="password">Password</label>

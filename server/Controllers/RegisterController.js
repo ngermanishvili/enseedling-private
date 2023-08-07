@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
 
     const userRegister = await register(userData);
 
-    res.send(userRegister);
+    res.status(200).send(userRegister);
   } catch (error) {}
 });
 

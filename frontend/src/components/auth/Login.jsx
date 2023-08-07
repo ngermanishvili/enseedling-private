@@ -44,6 +44,7 @@ function Login() {
         response
       );
       setLoading(false);
+      console.log(response.data)
 
       if (response.data.status === false) {
         const { email, password } = response.data.errors;
