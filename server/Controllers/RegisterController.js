@@ -6,10 +6,7 @@ router.post("/", async (req, res) => {
   try {
     const userData = req.body;
 
-    console.log(
-      "🚀 ~ file: RegisterController.js:8 ~ router.post ~ userData:",
-      userData
-    );
+    
     const userRegister = await register(userData);
 
     res.send(userRegister);
